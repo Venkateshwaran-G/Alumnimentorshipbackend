@@ -1,0 +1,8 @@
+FROM python:3.7
+COPY ./requirements.txt /dockerBuild/requirements.txt
+WORKDIR /dockerBuild
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip uninstall -y Jinja2 markupsafe
+RUN pip install "Jinja2<3.1" "markupsafe<2.1"
+COPY . /dockerBuild
+CMD ["flask", "run", "--host", "0.0.0.0"]
